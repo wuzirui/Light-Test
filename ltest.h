@@ -6,7 +6,7 @@
 
 class LTestCase {
   public:
-    virtual void execute() {}
+    virtual void execute() = 0;
     void operator() () {
       test_num = test_pass = test_error = 0;
       std::cout << "##################" << std::endl;
