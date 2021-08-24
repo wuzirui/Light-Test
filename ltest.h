@@ -6,7 +6,7 @@
 
 class LTestCase {
   public:
-    virtual void execute();
+    virtual void execute() {}
     void operator() () {
       test_num = test_pass = test_error = 0;
       std::cout << "##################" << std::endl;
@@ -17,6 +17,10 @@ class LTestCase {
       std::cout << "##################" << std::endl;
       if (test_num == test_pass) { 
         std::cout << "Test Passed" << std::endl;
+      }
+      else {
+        std::cout << "Pass " << test_pass << " Fail " << test_num - test_error - test_pass;
+        std::cout << "Error " << test_error << std::endl;
       }
     }
 #define CurPos "( " << __FILE__ << " : " << __LINE__ << " )"
