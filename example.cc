@@ -5,39 +5,32 @@ using namespace std;
 
 class LTestTest : public LTestCase {
 public:
-  bool testfunc_true() {
+  CASE(testfunc_true) {
     assertTrue(true);
-    return true;
   }
 
-  bool testfunc_false() {
+  CASE(testfunc_false) {
     assertTrue(false);
-    return false;
   }
 
   bool throwstr() {
-    throw "test";
+    throw "error string";
   }
-  bool testfunc_error() {
+
+  CASE(testfunc_error) {
     assertTrue(throwstr());
-    return false;
+  }
+  void execute() {
+    EXE(testfunc_true);
+    EXE(testfunc_false);
+    EXE(testfunc_error);
+
   }
 };
 
 
 int main() {
   LTestTest lt;
-  try {
-    throw "fail";
-  }
-  catch(const char * e) {
-    cout << e << endl;
-  }
-  catch(...) {
-    cout << "ERROR" << endl;
-  }
-  lt.testfunc_error();
-  lt.testfunc_true();
-  lt.testfunc_false();
+  lt();
   return 0;
 }

@@ -24,9 +24,9 @@ public:
   }
 
   virtual void execute() {
-    testfunc_true();
-    testfunc_false();
-    testfunc_error();
+    EXE(testfunc_error);
+    EXE(testfunc_true);
+    EXE(testfunc_false);
   }
 };
 
