@@ -3,8 +3,7 @@
 
 using namespace std;
 
-class LTestTest : public LTestCase {
-public:
+TESTSUITE(LTSuite)
   CASE(testfunc_true) {
     assertTrue(true);
   }
@@ -26,11 +25,10 @@ public:
     EXE(testfunc_error);
 
   }
-};
+ENDSUITE
 
-
+class A {public: int i = 1;} a;
 int main() {
-  LTestTest lt;
-  lt();
+  RunAllTests();
   return 0;
 }

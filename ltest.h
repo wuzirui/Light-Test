@@ -2,25 +2,45 @@
 #define __LTest_H__
 
 #include <iostream>
+#include <string>
+#include <vector>
+
+class LTestCase;
+std::vector<LTestCase *> ltest_cases;
+#define TESTSUITE(name) \
+  class name : public LTestCase { \
+    public: \
+      name() { \
+        ltest_cases.push_back(this); \
+        suitename = #name; \
+      } 
+
+
+#define ENDSUITE \
+  } caseEntity##__LINE__;
 
 
 class LTestCase {
   public:
     virtual void execute() = 0;
-    void operator() () {
+    void operator() (bool simplify_output = false) {
       test_num = test_pass = test_error = 0;
-      std::cout << "##################" << std::endl;
-      std::cout << "#  Test Running  #" << std::endl;
-      std::cout << "##################" << std::endl;
 
+      std::cout << "\nSuite: " << suitename << std::endl;
+      if (!simplify_output) {
+        std::cout << "##################" << std::endl;
+      }
+      
       execute();
-      std::cout << "##################" << std::endl;
+      if (!simplify_output)
+        std::cout << "##################" << std::endl;
+
       if (test_num == test_pass) {
         std::cout << "Test Passed" << std::endl;
       }
       else {
         std::cout << "Pass " << test_pass << ", Fail " << test_num - test_error - test_pass;
-        std::cout << ", Error " << test_error << std::endl;
+        std::cout << ", Error " << test_error << std::endl << std::endl;
       }
     }
 #define CurPos "( " << __FILE__ << " : " << __LINE__ << " )"
@@ -65,6 +85,14 @@ class LTestCase {
   protected:
     int test_num, test_pass, test_error;
     int running_result;
+    std::string suitename;
 };
+
+int RunAllTests() {
+  for (auto c : ltest_cases)  {
+    (*c) ();
+  }
+  return 0;
+}
 
 #endif
