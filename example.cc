@@ -19,16 +19,35 @@ TESTSUITE(LTSuite)
   CASE(testfunc_error) {
     assertTrue(throwstr());
   }
+
+  CASE(test_assertEqual) {
+    assertEqual(1 + 1, 2);
+  }
+
   void execute() {
     EXE(testfunc_true);
     EXE(testfunc_false);
     EXE(testfunc_error);
-
+    EXE(test_assertEqual);
   }
-ENDSUITE
+ENDSUITE(LTSuite)
 
-class A {public: int i = 1;} a;
+TESTSUITE(LT_Pass)
+    
+    CASE(test_pass) {
+        assertEqual(1 + 1, 2);
+    }
+
+    CASE (test_pass_2) {
+        assertTrue(true);
+    }
+
+    void execute() {
+        EXE(test_pass);
+        EXE(test_pass_2);
+    }
+ENDSUITE(LT_Pass)
+
 int main() {
-  RunAllTests();
-  return 0;
+  return RunAllTests();
 }
