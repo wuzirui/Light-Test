@@ -189,7 +189,7 @@ public:
         execute();
         
         if (test_num == test_pass) {
-            CW_TRACE_INFO ("%d Tests Passes In Total.");
+            CW_TRACE_INFO ("%d Tests Passes In Total.", test_num);
             CW_TRACE_VALID("Test Completed!");
         }
         else {
