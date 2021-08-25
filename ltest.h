@@ -36,7 +36,8 @@ class LTestCase {
         std::cout << "##################" << std::endl;
 
       if (test_num == test_pass) {
-        std::cout << "Test Passed" << std::endl;
+        std::cout << test_pass << " Tests Passed In Total" << std::endl;
+        std::cout << "Test Completed! " << std::endl;
       }
       else {
         std::cout << "Pass " << test_pass << ", Fail " << test_num - test_error - test_pass;
@@ -53,7 +54,7 @@ class LTestCase {
 #define ENV( statements ) \
   try {\
     statements \
-  } catch(exception & e) {\
+  } catch(std::exception & e) {\
     ERRMSG(e.what()) \
   } catch(std::string & e) {\
     ERRMSG(e) \
