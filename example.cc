@@ -21,6 +21,7 @@ TESTSUITE(LTSuite)
   }
 
   CASE(test_assertEqual) {
+    testlog("Log information %d + %d = %d .", 1, 1, 1 + 1);
     assertEqual(1 + 1, 2);
   }
 

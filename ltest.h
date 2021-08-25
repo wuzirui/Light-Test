@@ -4,6 +4,7 @@
 #include <iostream>
 #include <string>
 #include <vector>
+#include <cstdio>
 
 class LTestCase;
 std::vector<LTestCase *> ltest_cases;
@@ -23,11 +24,11 @@ public: \
 #define ENDSUITE(name) \
 } caseEntity##name;
 
+#define CurPos "(" << __FILE__ << ":" << __LINE__ << ")"
 
-#define CurPos "( " << __FILE__ << " : " << __LINE__ << " )"
 
 #define ERRMSG(msg)\
-    std::cout << "Error " << CurPos << ": " << msg << "." << std::endl; \
+    std::cout << "#... Error " << CurPos << ": " << msg << "." << std::endl; \
     running_result = -1; \
     return;
 
@@ -49,7 +50,7 @@ public: \
 #define CASE(name) void SUITE_##name()
 
 #define EXE(testname) \
-    std::cout << "Running: case=" << #testname << "... " << std::endl; \
+    std::cout << "# Running: case=" << #testname << "... " << std::endl; \
     running_result = 0; \
     SUITE_##testname(); \
     test_pass += running_result == 0; \
@@ -59,7 +60,7 @@ public: \
 #define assertTrue(cond) \
 ENV(\
     if (!(cond)) {\
-        std::cout << "Assertion Failed" << CurPos << " : suppose " << #cond << " == true, but got false instead." << std::endl; \
+        std::cout << "#... Assertion Failed" << CurPos << " : suppose " << #cond << " == true, but got false instead." << std::endl; \
         running_result = 1; \
         return; \
     })
@@ -67,12 +68,16 @@ ENV(\
 #define assertEqual(a, b) \
 ENV(\
     if ((a) != (b)) {\
-        std::cout << "Assertion Failed" << CurPos <<": " \
+        std::cout << "#... Assertion Failed" << CurPos <<": " \
                     << #a << " != " << #b << std::endl;	\
         running_result = 1;\
         return;\
     } \
 )
+
+#define testlog(msgStr, args...) \
+    std::cout << "#... LOG " << CurPos << " ";\
+    printf(msgStr "\n", args)
 
 class LTestCase {
 public:
@@ -101,7 +106,7 @@ public:
         }
         else {
             std::cout << "Pass " << test_pass << ", Fail " << test_num - test_error - test_pass;
-            std::cout << ", Error " << test_error << std::endl << std::endl;
+            std::cout << ", Error " << test_error << std::endl;
         }
     }
 
