@@ -1,5 +1,6 @@
 #include <iostream>
 #include "ltest.h"
+#include "main.cc"
 
 using namespace std;
 
